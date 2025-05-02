@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モダンレトロテニス</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-board">
+            <div class="player-score">0</div>
+            <div class="cpu-score">0</div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="controls">
+            <div class="control-info">
+                <p>左プレイヤー: <span class="key">W</span>/<span class="key">S</span> キーでパドルを動かす</p>
+                <p>右プレイヤー: <span class="key">O</span>/<span class="key">L</span> キーでパドルを動かす</p>
+                <p>長押しでパドルが加速します！</p>
+                <p><span class="key">Space</span> キーでゲーム開始</p>
+            </div>
+            <div class="button-container">
+                <button id="startButton" class="btn">ゲーム開始</button>
+                <button id="resetButton" class="btn">リセット</button>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
