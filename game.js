@@ -210,7 +210,8 @@ class TennisGame {
     
     // スコア表示の更新
     updateScoreDisplay() {
-        this.playerScoreElement.textContent = this.playerScore;
+        this.playerScoreElement.textContent = Number(this.playerScore.toFixed(2));
+        this.cpuScore = Number(this.cpuScore.toFixed(2));
         this.cpuScoreElement.textContent = this.cpuScore;
     }
     
@@ -393,6 +394,18 @@ class TennisGame {
             const spinAmount = this.playerPaddle.speed * GAME_CONFIG.spinFactor * (1 + paddleSpeedFactor * 2);
             this.ball.spin += spinAmount;
             
+            // 回転の強さに応じたボーナスポイントの計算
+            const spinIntensity = Math.abs(this.ball.spin);
+            if (spinIntensity > 0.5) {
+                // 回転の強さに応じて0.1〜5ポイントを加点
+                const bonusPoints = Math.min(Math.max(spinIntensity * 0.5, 0.1), 5);
+                this.playerScore += bonusPoints;
+                this.updateScoreDisplay();
+                
+                // ボーナスポイントの表示エフェクト
+                this.showBonusPointsEffect(this.ball.x, this.ball.y, bonusPoints, 'player');
+            }
+            
             // 音声効果の再生
             if (GAME_CONFIG.soundEnabled) {
                 // 通常のヒット音
@@ -441,6 +454,18 @@ class TennisGame {
             const paddleSpeedFactor = Math.abs(this.cpuPaddle.speed) / GAME_CONFIG.maxPaddleSpeed;
             const spinAmount = this.cpuPaddle.speed * GAME_CONFIG.spinFactor * (1 + paddleSpeedFactor * 2);
             this.ball.spin += spinAmount;
+            
+            // 回転の強さに応じたボーナスポイントの計算
+            const spinIntensity = Math.abs(this.ball.spin);
+            if (spinIntensity > 0.5) {
+                // 回転の強さに応じて0.1〜5ポイントを加点
+                const bonusPoints = Math.min(Math.max(spinIntensity * 0.5, 0.1), 5);
+                this.cpuScore += bonusPoints;
+                this.updateScoreDisplay();
+                
+                // ボーナスポイントの表示エフェクト
+                this.showBonusPointsEffect(this.ball.x, this.ball.y, bonusPoints, 'cpu');
+            }
             
             // 音声効果の再生
             if (GAME_CONFIG.soundEnabled) {
@@ -818,6 +843,27 @@ class TennisGame {
         // 説明
         this.ctx.font = '16px "Press Start 2P"';
         this.ctx.fillText('もう一度プレイするには「ゲーム開始」を押してください', this.canvas.width / 2, this.canvas.height / 2 + 50);
+    }
+    
+    // ボーナスポイントの表示エフェクト
+    showBonusPointsEffect(x, y, points, player) {
+        // エフェクトの色を設定
+        const color = player === 'player' ? 'rgba(0, 243, 255, 0.9)' : 'rgba(255, 0, 230, 0.9)';
+        
+        // ポイントを小数点第2位までで四捨五入して表示
+        const pointsText = `+${points.toFixed(2)}`;
+        
+        // テキストの描画
+        this.ctx.font = '20px Arial';
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText(pointsText, x, y - 30);
+        
+        // アニメーション効果（簡易版）
+        // 実際のゲームでは、アニメーションフレームを使って上に浮かび上がる効果などを実装するとよい
+        setTimeout(() => {
+            // 次のフレームで消える（実際のゲームではもっと洗練された方法で実装する）
+        }, 1000);
     }
     
     // ゲームループ
