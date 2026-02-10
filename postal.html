@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郵便番号検索 | モダンレトロテニス</title>
+    <link rel="stylesheet" href="postal.css">
+</head>
+<body>
+    <div class="container">
+        <h1>郵便番号検索</h1>
+        <p class="subtitle">住所を素早く検索します</p>
+
+        <div class="field-container">
+            <div class="input-group">
+                <input type="text" id="zipcode" placeholder="例: 1000001" maxlength="7">
+                <div id="error" class="error-message"></div>
+            </div>
+            
+            <button id="searchBtn" class="btn-lookup">
+                <span class="btn-text">検索する</span>
+                <div id="loader" class="loader"></div>
+            </button>
+        </div>
+
+        <div id="resultArea" class="result-area">
+            <div class="result-label">検索結果</div>
+            <div id="addressText" class="result-text"></div>
+        </div>
+
+        <a href="index.html" class="back-link">← ゲームに戻る</a>
+    </div>
+
+    <script src="postal.js"></script>
+</body>
+</html>
